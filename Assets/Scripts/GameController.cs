@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour {
 	public Sprite[] cardSprites = new Sprite[4*13];
 
 	public GameObject Card;
-	private Card[] playCards = new Card[4*13];
+	private static Card[] playCards = new Card[4*13];
 	private int cardIdx = 0;
 	private bool[] setFlag = new bool[4*13];
 
@@ -33,8 +33,9 @@ public class GameController : MonoBehaviour {
 		for (int i = 0; i < 7; i++) {
 			playDeck [i] = new Vector2 (-3.6f + 1.8f * i, 3.37f);
 			for (int j = 0; j < i; j++)
-				Instantiate (Card, playDeck [i] + new Vector2 (0.0f, -0.3f * j), Quaternion.identity);
-			newCardSet (i, playDeck[i] + new Vector2(0.0f, -0.3f * i));
+				newCardSet (true, i, j, playDeck [i] + new Vector2 (0.0f, -0.3f * j));
+//				Instantiate (Card, playDeck [i] + new Vector2 (0.0f, -0.3f * j), Quaternion.identity);
+			newCardSet (false, i, i, playDeck[i] + new Vector2(0.0f, -0.3f * i));
 		}
 		for (int i = 0; i < 4; i++) {
 			shapeDeck [i] = new Vector2 (-7.5f + (i % 2) * 1.7f, -1 - (i / 2) * 2.3f);
@@ -43,21 +44,24 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	void newCardSet(int line, Vector2 position){
-		int newRandomNum = (int) Random.Range (0.0f, 52.0f);
+	void newCardSet(bool hidden, int i, int j, Vector2 position){
+		int newRandomNum;
+		newRandomNum = (int) Random.Range (0.0f, 52.0f);
 		while (newRandomNum == 52 || setFlag [newRandomNum]) {
 			//find another random number;
 			newRandomNum = (int) Random.Range (0.0f, 52.0f);
 		}
 		setFlag [newRandomNum] = true;
 
-		playCards [cardIdx] = new Card (newRandomNum / 13, newRandomNum % 13);
-		playCards [cardIdx].cardTexture = cardSprites[newRandomNum];
-		playCards [cardIdx].line = line;
-		playCards [cardIdx].lineIdx = line;
+		playCards [cardIdx] = new Card (hidden, newRandomNum / 13, newRandomNum % 13);
+		if(!hidden)
+			playCards [cardIdx].cardTexture = cardSprites[newRandomNum];
+		playCards [cardIdx].line = i;
+		playCards [cardIdx].lineIdx = j;
 
-		GameObject tmp = Instantiate (Card, position, Quaternion.identity) as GameObject;
-		tmp.GetComponent<SpriteRenderer> ().sprite = playCards [cardIdx].cardTexture;
+		playCards [cardIdx].me = Instantiate (Card, position, Quaternion.identity) as GameObject;
+		if(!hidden)
+			playCards [cardIdx].me.GetComponent<SpriteRenderer> ().sprite = playCards [cardIdx].cardTexture;
 		cardIdx++;
 	}
 }
