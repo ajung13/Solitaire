@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Card : MonoBehaviour {
 	public bool isHidden;
-	private Sprite cardTexture;
+	public Sprite cardTexture;
 	private int shape, number;
-	private int line, lineIdx;
+	public int line, lineIdx;
 
-	public Card(int i, int j, Sprite texture){
+	public Card(int i, int j){
 		isHidden = true;
-		this.cardTexture = texture;
 		this.shape = i;
 		this.number = j;
 	}

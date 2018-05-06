@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 	public Sprite[] shape = new Sprite[4];
 	public Sprite hiddenCard;
-	public Sprite[,] cardSprites = new Sprite[4, 13];
+	public Sprite[] cardSprites = new Sprite[4*13];
 
 	public GameObject Card;
 	private Card[] playCards = new Card[4*13];
@@ -45,17 +45,19 @@ public class GameController : MonoBehaviour {
 
 	void newCardSet(int line, Vector2 position){
 		int newRandomNum = (int) Random.Range (0.0f, 52.0f);
-		while (newRandomNum == 52 || setFlag [newRandomNum / 13, newRandomNum % 13]) {
+		while (newRandomNum == 52 || setFlag [newRandomNum]) {
 			//find another random number;
 			newRandomNum = (int) Random.Range (0.0f, 52.0f);
 		}
-		setFlag [newRandomNum / 13, newRandomNum % 13] = true;
+		setFlag [newRandomNum] = true;
 
-		playCards [cardIdx] = new Card (newRandomNum / 13, newRandomNum % 13, cardSprites[newRandomNum / 13, newRandomNum % 13]);
+		playCards [cardIdx] = new Card (newRandomNum / 13, newRandomNum % 13);
+		playCards [cardIdx].cardTexture = cardSprites[newRandomNum];
 		playCards [cardIdx].line = line;
 		playCards [cardIdx].lineIdx = line;
 
 		GameObject tmp = Instantiate (Card, position, Quaternion.identity) as GameObject;
 		tmp.GetComponent<SpriteRenderer> ().sprite = playCards [cardIdx].cardTexture;
+		cardIdx++;
 	}
 }

@@ -300,6 +300,59 @@ MonoBehaviour:
   - {fileID: 21300110, guid: f128623f2aaea8748964ba999253c44d, type: 3}
   - {fileID: 21300112, guid: f128623f2aaea8748964ba999253c44d, type: 3}
   hiddenCard: {fileID: 21300108, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  cardSprites:
+  - {fileID: 21300000, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300002, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300004, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300006, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300008, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300010, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300012, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300014, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300016, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300018, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300020, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300022, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300024, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300026, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300028, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300030, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300032, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300034, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300036, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300038, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300040, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300042, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300044, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300046, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300048, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300050, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300052, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300054, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300056, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300058, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300060, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300062, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300064, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300066, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300068, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300070, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300072, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300074, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300076, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300078, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300080, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300082, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300084, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300086, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300088, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300090, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300092, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300094, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300096, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300098, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300100, guid: f128623f2aaea8748964ba999253c44d, type: 3}
+  - {fileID: 21300102, guid: f128623f2aaea8748964ba999253c44d, type: 3}
   Card: {fileID: 1926123566214700, guid: 622f29bb73e0bf64189a7b3763b96d82, type: 2}
   playDeck:
   - {x: 0, y: 0}
