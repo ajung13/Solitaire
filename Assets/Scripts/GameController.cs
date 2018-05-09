@@ -5,14 +5,14 @@ using UnityEngine;
 //public enum shape {Heart, Diamond, Clova, Spade};
 
 public class GameController : MonoBehaviour {
+	public static List<GameObject>[] playCards = new List<GameObject>[7];
+	private static int cardOrdering;
+
 	public Sprite[] shape = new Sprite[4];
 	public Sprite hiddenCard;
 	public Sprite[] cardSprites = new Sprite[4*13];
 
 	public GameObject Card;
-//	public static Card[] playCards = new Card[4*13];
-	public static List<GameObject>[] playCards = new List<GameObject>[7];
-	private int cardIdx = 0;
 	private bool[] setFlag = new bool[4*13];
 
 	public Vector2[] playDeck = new Vector2[7];
@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour {
 			setFlag [i] = false;
 		for (int i = 0; i < 7; i++)
 			playCards [i] = new List<GameObject> ();
+		cardOrdering = 0;
 		preCardSet ();
 	}
 	
@@ -37,7 +38,6 @@ public class GameController : MonoBehaviour {
 			playDeck [i] = new Vector2 (-3.6f + 1.8f * i, 3.37f);
 			for (int j = 0; j < i; j++)
 				newCardSet (true, i, j, playDeck [i] + new Vector2 (0.0f, -0.3f * j));
-//				Instantiate (Card, playDeck [i] + new Vector2 (0.0f, -0.3f * j), Quaternion.identity);
 			newCardSet (false, i, i, playDeck[i] + new Vector2(0.0f, -0.3f * i));
 		}
 		for (int i = 0; i < 4; i++) {
@@ -65,8 +65,10 @@ public class GameController : MonoBehaviour {
 			tmp.GetComponent<SpriteRenderer> ().sprite = cardSprites [newRandomNum];
 			tmp.GetComponent<BoxCollider2D> ().enabled = true;
 		}
-//		playCards [cardIdx] = tmp.GetComponent<Card> ();
 		playCards[i].Add(tmp);
-		cardIdx++;
+	}
+
+	public static int updateCardOrder(){
+		return cardOrdering++;
 	}
 }

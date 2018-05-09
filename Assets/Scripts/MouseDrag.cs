@@ -59,12 +59,11 @@ public class MouseDrag : MonoBehaviour {
 		int tmpCnt = temp.Count;
 		for (int i = 0; i < tmpCnt - myLineIdx; i++) {
 			Vector2 objPos = new Vector2 (x_start + line * x_offset, y_start + (lineIdx + i) * y_offset);
-//			GameObject tmp = GameController.playCards [line].FindLast;
-//			GameObject tmp = GameController.playCards [line][i];
 			GameObject tmp = temp[myLineIdx];
 			tmp.GetComponent<Card> ().line = line;
 			tmp.GetComponent<Card> ().lineIdx = lineIdx;
 			tmp.transform.position = objPos;
+			tmp.GetComponent<SpriteRenderer> ().sortingOrder = GameController.updateCardOrder();
 			GameController.playCards [myLine].Remove (tmp);
 			GameController.playCards [line].Add (tmp);
 		}
