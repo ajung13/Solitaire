@@ -48,8 +48,7 @@ public class Card : MonoBehaviour {
 		}*/
 	}
 
-	void printInfo(){
-		Debug.Log ("---------------------");
+	public void printInfo(){
 		string debugStr = "";
 
 		if (me == null)
@@ -61,7 +60,7 @@ public class Card : MonoBehaviour {
 			debugStr += "not hidden\n";
 
 		debugStr += "shape: " + shape + ", number: " + number;
-		debugStr += "line: " + line + ", " + lineIdx;
+		debugStr += ", line: " + line + ", " + lineIdx;
 		
 		Debug.Log (debugStr);
 	}

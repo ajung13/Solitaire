@@ -66,7 +66,6 @@ public class GameController : MonoBehaviour {
 			tmp.GetComponent<BoxCollider2D> ().enabled = true;
 		}
 //		playCards [cardIdx] = tmp.GetComponent<Card> ();
-		Debug.Log("i : " + i);
 		playCards[i].Add(tmp);
 		cardIdx++;
 	}

@@ -30,8 +30,6 @@ public class MouseDrag : MonoBehaviour {
 		if (validCheck (line)) {
 			int lineIdx = findLineIdx (line);
 			Debug.Log ("move to line (" + line + ", " + lineIdx + ")");
-			GetComponent<Card> ().line = line;
-			GetComponent<Card> ().lineIdx = lineIdx;
 			moveCards (line, lineIdx);
 		} else {
 			transform.position = initPosition;
@@ -54,8 +52,30 @@ public class MouseDrag : MonoBehaviour {
 	}
 
 	void moveCards(int line, int lineIdx){
-		Vector2 objPos = new Vector2 (x_start + line * x_offset, y_start + lineIdx * y_offset);
-		transform.position = objPos;
+		int myLine = GetComponent<Card> ().line;
+		int myLineIdx = GetComponent<Card> ().lineIdx;
+
+		List<GameObject> temp = GameController.playCards [myLine];
+		int tmpCnt = temp.Count;
+		for (int i = 0; i < tmpCnt - myLineIdx; i++) {
+			Vector2 objPos = new Vector2 (x_start + line * x_offset, y_start + (lineIdx + i) * y_offset);
+//			GameObject tmp = GameController.playCards [line].FindLast;
+//			GameObject tmp = GameController.playCards [line][i];
+			GameObject tmp = temp[myLineIdx];
+			tmp.GetComponent<Card> ().line = line;
+			tmp.GetComponent<Card> ().lineIdx = lineIdx;
+			tmp.transform.position = objPos;
+			GameController.playCards [myLine].Remove (tmp);
+			GameController.playCards [line].Add (tmp);
+		}
+
+		Debug.Log ("----move complete (" + (tmpCnt-myLineIdx) + " objects)-----");
+		foreach (GameObject tmp in GameController.playCards[myLine])
+			tmp.GetComponent<Card> ().printInfo ();
+		foreach (GameObject tmp in GameController.playCards[line])
+			tmp.GetComponent<Card> ().printInfo ();
+
+			
 	}
 
 	bool validCheck(int line){
