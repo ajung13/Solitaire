@@ -60,8 +60,8 @@ public class GameController : MonoBehaviour {
 		tmp.GetComponent<Card> ().initialize (hidden, newRandomNum / 13, newRandomNum % 13, tmp);
 		tmp.GetComponent<Card> ().line = i;
 		tmp.GetComponent<Card> ().lineIdx = j;
+		tmp.GetComponent<Card> ().cardTexture = cardSprites [newRandomNum];
 		if (!hidden) {
-			tmp.GetComponent<Card> ().cardTexture = cardSprites [newRandomNum];
 			tmp.GetComponent<SpriteRenderer> ().sprite = cardSprites [newRandomNum];
 			tmp.GetComponent<BoxCollider2D> ().enabled = true;
 		}
@@ -70,5 +70,26 @@ public class GameController : MonoBehaviour {
 
 	public static int updateCardOrder(){
 		return ++cardOrdering;
+	}
+
+	public static void revealCard(int line){
+		GameObject tmp = lastCardinLine(line);
+		if (tmp == null)
+			return;
+		if (!tmp.GetComponent<Card> ().isHidden) {
+			Debug.Log ("is not hidden");
+			return;
+		}
+		tmp.GetComponent<Card> ().isHidden = false;
+		tmp.GetComponent<SpriteRenderer> ().sprite = tmp.GetComponent<Card> ().cardTexture;
+		tmp.GetComponent<BoxCollider2D> ().enabled = true;
+	}
+
+	public static GameObject lastCardinLine(int line){
+		List<GameObject> tmpLine = playCards [line];
+		if (tmpLine.Count == 0)
+			return null;
+		GameObject tmp = tmpLine [tmpLine.Count - 1];
+		return tmp;
 	}
 }

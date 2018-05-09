@@ -7,7 +7,7 @@ public class Card : MonoBehaviour {
 
 	public bool isHidden;
 	public Sprite cardTexture;
-	private int shape, number;
+	public int shape, number;
 	public int line, lineIdx;
 
 	private Vector3 offset;

@@ -8,7 +8,7 @@ public class MouseDrag : MonoBehaviour {
 	private static readonly float x_start = -3.6f;
 	private static readonly float x_offset = 1.8f;
 	private static readonly float y_start = 3.37f;
-	private static readonly float y_offset = -0.5f;
+	private static readonly float y_offset = -0.3f;
 
 	void OnMouseDown(){
 		initPosition = transform.position;
@@ -26,6 +26,7 @@ public class MouseDrag : MonoBehaviour {
 		Vector2 finalPosition = Camera.main.ScreenToWorldPoint (mousePosition);
 
 		int line = (int)((finalPosition.x - x_start) / x_offset);
+		Debug.Log (finalPosition.x + " = " + x_start + " + " + x_offset + " * " + line);
 
 		if (validCheck (line)) {
 			int lineIdx = findLineIdx (line);
@@ -38,16 +39,6 @@ public class MouseDrag : MonoBehaviour {
 	}
 
 	int findLineIdx(int line){
-/*		int max = 0;
-		Card[] cards = GameController.playCards;
-		for (int i = 0; i < 4 * 13; i++) {
-			if (cards [i] == null)
-				break;
-			if (cards[i].line == line && cards[i].lineIdx > max)
-				max = cards[i].lineIdx;
-		}
-		max++;
-		return max;*/
 		return GameController.playCards [line].Count;
 	}
 
@@ -69,17 +60,46 @@ public class MouseDrag : MonoBehaviour {
 		}
 
 		Debug.Log ("----move complete (" + tmpCnt + "-" + myLineIdx + " objects)-----");
-		foreach (GameObject tmp in GameController.playCards[myLine])
-			tmp.GetComponent<Card> ().printInfo ();
-		foreach (GameObject tmp in GameController.playCards[line])
-			tmp.GetComponent<Card> ().printInfo ();
 
-			
+		GameController.revealCard (myLine);
 	}
 
 	bool validCheck(int line){
 		if (line == GetComponent<Card> ().line)
 			return false;
-		return true;
+
+		bool returnflag = false;
+		Card prevCard = GameController.lastCardinLine (line).GetComponent<Card> ();
+
+		//color check
+		int prevColor = prevCard.shape;
+		switch (GetComponent<Card> ().shape) {
+		case 0:
+		case 3:
+			if (prevColor == 1 || prevColor == 2)
+				returnflag = true;
+			break;
+		case 1:
+		case 2:
+			if (prevColor == 0 || prevColor == 3)
+				returnflag = true;
+			break;
+		default:
+			break;
+		}
+		if (!returnflag)
+			return returnflag;
+		Debug.Log ("color check ok");
+
+		//number check
+		returnflag = false;
+		int prevnum = prevCard.number;
+		if (GetComponent<Card> ().number + 1 == prevnum) {
+			returnflag = true;
+			Debug.Log ("number check ok");
+		} else
+			Debug.Log ("number check failed");
+
+		return returnflag;
 	}
 }
