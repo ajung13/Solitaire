@@ -10,7 +10,8 @@ public class GameController : MonoBehaviour {
 	public Sprite[] cardSprites = new Sprite[4*13];
 
 	public GameObject Card;
-	private static Card[] playCards = new Card[4*13];
+//	public static Card[] playCards = new Card[4*13];
+	public static List<GameObject>[] playCards = new List<GameObject>[7];
 	private int cardIdx = 0;
 	private bool[] setFlag = new bool[4*13];
 
@@ -19,9 +20,11 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		preCardSet ();
 		for (int i = 0; i < 4 * 13; i++)
 			setFlag [i] = false;
+		for (int i = 0; i < 7; i++)
+			playCards [i] = new List<GameObject> ();
+		preCardSet ();
 	}
 	
 	// Update is called once per frame
@@ -53,15 +56,18 @@ public class GameController : MonoBehaviour {
 		}
 		setFlag [newRandomNum] = true;
 
-		playCards [cardIdx] = new Card (hidden, newRandomNum / 13, newRandomNum % 13);
-		if(!hidden)
-			playCards [cardIdx].cardTexture = cardSprites[newRandomNum];
-		playCards [cardIdx].line = i;
-		playCards [cardIdx].lineIdx = j;
-
-		playCards [cardIdx].me = Instantiate (Card, position, Quaternion.identity) as GameObject;
-		if(!hidden)
-			playCards [cardIdx].me.GetComponent<SpriteRenderer> ().sprite = playCards [cardIdx].cardTexture;
+		GameObject tmp = Instantiate (Card, position, Quaternion.identity) as GameObject;
+		tmp.GetComponent<Card> ().initialize (hidden, newRandomNum / 13, newRandomNum % 13, tmp);
+		tmp.GetComponent<Card> ().line = i;
+		tmp.GetComponent<Card> ().lineIdx = j;
+		if (!hidden) {
+			tmp.GetComponent<Card> ().cardTexture = cardSprites [newRandomNum];
+			tmp.GetComponent<SpriteRenderer> ().sprite = cardSprites [newRandomNum];
+			tmp.GetComponent<BoxCollider2D> ().enabled = true;
+		}
+//		playCards [cardIdx] = tmp.GetComponent<Card> ();
+		Debug.Log("i : " + i);
+		playCards[i].Add(tmp);
 		cardIdx++;
 	}
 }

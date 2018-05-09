@@ -11,13 +11,13 @@ public class Card : MonoBehaviour {
 	public int line, lineIdx;
 
 	private Vector3 offset;
-	private bool dragFlag;
+//	private bool dragFlag;
 
-	public Card(bool flag, int i, int j){
+	public void initialize(bool flag, int i, int j, GameObject me){
 		isHidden = flag;
 		this.shape = i;
 		this.number = j;
-		dragFlag = false;
+		this.me = me;
 	}
 
 	// Use this for initialization
@@ -27,7 +27,7 @@ public class Card : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown (0)) {
+/*		if (Input.GetMouseButtonDown (0)) {
 			Debug.Log ("mouse down");
 			offset = gameObject.transform.position -
 				Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f));
@@ -45,7 +45,7 @@ public class Card : MonoBehaviour {
 
 		if (Input.GetMouseButtonUp (0)) {
 			dragFlag = false;
-		}
+		}*/
 	}
 
 	void printInfo(){
