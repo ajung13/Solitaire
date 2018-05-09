@@ -8,7 +8,7 @@ public class MouseDrag : MonoBehaviour {
 	private static readonly float x_start = -3.6f;
 	private static readonly float x_offset = 1.8f;
 	private static readonly float y_start = 3.37f;
-	private static readonly float y_offset = -0.3f;
+	private static readonly float y_offset = -0.5f;
 
 	void OnMouseDown(){
 		initPosition = transform.position;
@@ -29,7 +29,7 @@ public class MouseDrag : MonoBehaviour {
 
 		if (validCheck (line)) {
 			int lineIdx = findLineIdx (line);
-			Debug.Log ("move to line (" + line + ", " + lineIdx + ")");
+			Debug.Log ("move from line " + GetComponent<Card> ().line + " to line (" + line + ", " + lineIdx + ")");
 			moveCards (line, lineIdx);
 		} else {
 			transform.position = initPosition;
@@ -61,14 +61,14 @@ public class MouseDrag : MonoBehaviour {
 			Vector2 objPos = new Vector2 (x_start + line * x_offset, y_start + (lineIdx + i) * y_offset);
 			GameObject tmp = temp[myLineIdx];
 			tmp.GetComponent<Card> ().line = line;
-			tmp.GetComponent<Card> ().lineIdx = lineIdx;
+			tmp.GetComponent<Card> ().lineIdx = lineIdx + i;
 			tmp.transform.position = objPos;
 			tmp.GetComponent<SpriteRenderer> ().sortingOrder = GameController.updateCardOrder();
 			GameController.playCards [myLine].Remove (tmp);
 			GameController.playCards [line].Add (tmp);
 		}
 
-		Debug.Log ("----move complete (" + (tmpCnt-myLineIdx) + " objects)-----");
+		Debug.Log ("----move complete (" + tmpCnt + "-" + myLineIdx + " objects)-----");
 		foreach (GameObject tmp in GameController.playCards[myLine])
 			tmp.GetComponent<Card> ().printInfo ();
 		foreach (GameObject tmp in GameController.playCards[line])
@@ -78,6 +78,8 @@ public class MouseDrag : MonoBehaviour {
 	}
 
 	bool validCheck(int line){
+		if (line == GetComponent<Card> ().line)
+			return false;
 		return true;
 	}
 }

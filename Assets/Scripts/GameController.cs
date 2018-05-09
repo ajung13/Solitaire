@@ -69,6 +69,6 @@ public class GameController : MonoBehaviour {
 	}
 
 	public static int updateCardOrder(){
-		return cardOrdering++;
+		return ++cardOrdering;
 	}
 }
