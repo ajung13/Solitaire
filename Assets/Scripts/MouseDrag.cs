@@ -10,6 +10,9 @@ public class MouseDrag : MonoBehaviour {
 	private static readonly float y_start = 3.37f;
 	private static readonly float y_offset = -0.3f;
 
+//	private readonly Vector2 hiddenDeckPos = new Vector2 (-7.45f, 3.37f);
+	private readonly Vector2 cardDeckPos = new Vector2(-5.65f, 3.37f);
+
 	void OnMouseDown(){
 		initPosition = transform.position;
 	}
@@ -23,19 +26,23 @@ public class MouseDrag : MonoBehaviour {
 
 	void OnMouseUp(){
 		Vector2 mousePosition = new Vector2 (Input.mousePosition.x, Input.mousePosition.y);
-		Vector2 finalPosition = Camera.main.ScreenToWorldPoint (mousePosition);
+//		if (Mathf.Abs(mousePosition.x - hiddenDeckPos.x) < 0.4f && Mathf.Abs(mousePosition.y - hiddenDeckPos.y) < 0.4f)  {
+//			Debug.Log ("new card come on");
+//			newCard ();
+//		} else {
+			Vector2 finalPosition = Camera.main.ScreenToWorldPoint (mousePosition);
 
-		int line = (int)((finalPosition.x - x_start) / x_offset);
-		Debug.Log (finalPosition.x + " = " + x_start + " + " + x_offset + " * " + line);
+			int line = (int)((finalPosition.x - x_start) / x_offset);
+			Debug.Log (finalPosition.x + " = " + x_start + " + " + x_offset + " * " + line);
 
-		if (validCheck (line)) {
-			int lineIdx = findLineIdx (line);
-			Debug.Log ("move from line " + GetComponent<Card> ().line + " to line (" + line + ", " + lineIdx + ")");
-			moveCards (line, lineIdx);
-		} else {
-			transform.position = initPosition;
-		}
-
+			if (validCheck (line)) {
+				int lineIdx = findLineIdx (line);
+				Debug.Log ("move from line " + GetComponent<Card> ().line + " to line (" + line + ", " + lineIdx + ")");
+				moveCards (line, lineIdx);
+			} else {
+				transform.position = initPosition;
+			}
+//		}
 	}
 
 	int findLineIdx(int line){
@@ -57,11 +64,14 @@ public class MouseDrag : MonoBehaviour {
 			tmp.GetComponent<SpriteRenderer> ().sortingOrder = GameController.updateCardOrder();
 			GameController.playCards [myLine].Remove (tmp);
 			GameController.playCards [line].Add (tmp);
+			if (myLine == 7)
+				break;
 		}
 
 		Debug.Log ("----move complete (" + tmpCnt + "-" + myLineIdx + " objects)-----");
 
-		GameController.revealCard (myLine);
+		if(myLine != 7)
+			GameController.revealCard (myLine);
 	}
 
 	bool validCheck(int line){
@@ -101,5 +111,21 @@ public class MouseDrag : MonoBehaviour {
 			Debug.Log ("number check failed");
 
 		return returnflag;
+	}
+
+	void newCard(){
+		List<GameObject> tmp = GameController.playCards [7];
+		int ordering = GameController.hiddenCardNum;
+		if (ordering >= tmp.Count) {
+			return;
+		}
+
+		GameObject nextCard = tmp [ordering];
+		nextCard.transform.position = cardDeckPos;
+		nextCard.GetComponent<Card> ().isHidden = false;
+		nextCard.GetComponent<SpriteRenderer> ().sprite = nextCard.GetComponent<Card>().cardTexture;
+		nextCard.GetComponent<BoxCollider2D> ().enabled = true;
+
+		GameController.hiddenCardNum++;
 	}
 }

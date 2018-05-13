@@ -27,25 +27,7 @@ public class Card : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-/*		if (Input.GetMouseButtonDown (0)) {
-			Debug.Log ("mouse down");
-			offset = gameObject.transform.position -
-				Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10.0f));
-			printInfo ();
-			dragFlag = true;
-		}
-
-		if (dragFlag) {
-			Debug.Log ("mouse drag");
-			Vector3 newPosition = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 10.0f);
-//			transform.position = Camera.main.ScreenToWorldPoint (newPosition) + offset;
-//			transform.localPosition = Camera.main.ScreenToWorldPoint (newPosition) + offset;
-			me.transform.localPosition = Camera.main.ScreenToWorldPoint (newPosition) + offset;
-		}
-
-		if (Input.GetMouseButtonUp (0)) {
-			dragFlag = false;
-		}*/
+		
 	}
 
 	public void printInfo(){
