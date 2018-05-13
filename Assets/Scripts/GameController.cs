@@ -115,6 +115,13 @@ public class GameController : MonoBehaviour {
 		List<GameObject> tmp = GameController.playCards [7];
 		int ordering = GameController.hiddenCardNum;
 		if (ordering >= tmp.Count) {
+			GameController.hiddenCardNum = 0;
+			foreach (GameObject eachObj in tmp) {
+				eachObj.transform.position = hiddenDeckPos;
+				eachObj.GetComponent<Card> ().isHidden = true;
+				eachObj.GetComponent<SpriteRenderer> ().sprite = hiddenCard;
+				eachObj.GetComponent<BoxCollider2D> ().enabled = false;
+			}
 			return;
 		}
 

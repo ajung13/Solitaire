@@ -10,9 +10,6 @@ public class MouseDrag : MonoBehaviour {
 	private static readonly float y_start = 3.37f;
 	private static readonly float y_offset = -0.3f;
 
-//	private readonly Vector2 hiddenDeckPos = new Vector2 (-7.45f, 3.37f);
-	private readonly Vector2 cardDeckPos = new Vector2(-5.65f, 3.37f);
-
 	void OnMouseDown(){
 		initPosition = transform.position;
 	}
@@ -64,8 +61,10 @@ public class MouseDrag : MonoBehaviour {
 			tmp.GetComponent<SpriteRenderer> ().sortingOrder = GameController.updateCardOrder();
 			GameController.playCards [myLine].Remove (tmp);
 			GameController.playCards [line].Add (tmp);
-			if (myLine == 7)
+			if (myLine == 7) {
+				Debug.Log ("I was waiting");
 				break;
+			}
 		}
 
 		Debug.Log ("----move complete (" + tmpCnt + "-" + myLineIdx + " objects)-----");
@@ -79,6 +78,12 @@ public class MouseDrag : MonoBehaviour {
 			return false;
 
 		bool returnflag = false;
+		if (GameController.lastCardinLine (line) == null) {
+			if (GetComponent<Card> ().number == 12)
+				return true;
+			else
+				return false;
+		}
 		Card prevCard = GameController.lastCardinLine (line).GetComponent<Card> ();
 
 		//color check
@@ -111,21 +116,5 @@ public class MouseDrag : MonoBehaviour {
 			Debug.Log ("number check failed");
 
 		return returnflag;
-	}
-
-	void newCard(){
-		List<GameObject> tmp = GameController.playCards [7];
-		int ordering = GameController.hiddenCardNum;
-		if (ordering >= tmp.Count) {
-			return;
-		}
-
-		GameObject nextCard = tmp [ordering];
-		nextCard.transform.position = cardDeckPos;
-		nextCard.GetComponent<Card> ().isHidden = false;
-		nextCard.GetComponent<SpriteRenderer> ().sprite = nextCard.GetComponent<Card>().cardTexture;
-		nextCard.GetComponent<BoxCollider2D> ().enabled = true;
-
-		GameController.hiddenCardNum++;
 	}
 }
