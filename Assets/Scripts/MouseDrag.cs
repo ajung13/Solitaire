@@ -96,38 +96,49 @@ public class MouseDrag : MonoBehaviour {
 			return;
 		}
 
-		//move all cards behind me
-		List<GameObject> temp = GameController.playCards [myLine];
-		int tmpCnt = temp.Count;
-		int cnt = 0;
-		for (int i = 0; i < tmpCnt - myLineIdx; i++) {
-			Vector2 objPos;
+		if (myLine == 7) {
+			Debug.Log ("hard coding let's go");
 			if (line < 7)
-				objPos = new Vector2 (x_start + line * x_offset, y_start + (lineIdx + i) * y_offset);
+				transform.position = new Vector2 (x_start + line * x_offset, y_start + lineIdx * y_offset);
 			else
-				objPos = new Vector2 (-7.5f + ((line-8) % 2) * 1.7f, -1 - ((line-8) / 2) * 2.3f);
-			GameObject tmp = temp[myLineIdx];
-			if (tmp.GetComponent<Card> ().shape != GetComponent<Card> ().shape || tmp.GetComponent<Card> ().number != GetComponent<Card> ().number) {
-				Debug.Log ("omg what's going on");
-				tmp.GetComponent<Card> ().printInfo ();
+				transform.position = new Vector2 (-7.5f + ((line - 8) % 2) * 1.7f, -1 - ((line - 8) / 2) * 2.3f);
+			GetComponent<Card> ().line = line;
+			GetComponent<Card> ().lineIdx = lineIdx;
+			GetComponent<SpriteRenderer> ().sortingOrder = GameController.updateCardOrder ();
+			GameController.playCards [myLine].Remove (gameObject);
+			GameController.playCards [line].Add (gameObject);
+		} else {
+			//move all cards behind me
+			List<GameObject> temp = GameController.playCards [myLine];
+			int tmpCnt = temp.Count;
+			int cnt = 0;
+			for (int i = 0; i < tmpCnt - myLineIdx; i++) {
+				Vector2 objPos;
+				if (line < 7)
+					objPos = new Vector2 (x_start + line * x_offset, y_start + (lineIdx + i) * y_offset);
+				else
+					objPos = new Vector2 (-7.5f + ((line - 8) % 2) * 1.7f, -1 - ((line - 8) / 2) * 2.3f);
+				GameObject tmp = temp [myLineIdx];
+				if (tmp.GetComponent<Card> ().shape != GetComponent<Card> ().shape || tmp.GetComponent<Card> ().number != GetComponent<Card> ().number) {
+					Debug.Log ("omg what's going on");
+					tmp.GetComponent<Card> ().printInfo ();
+				}
+				tmp.GetComponent<Card> ().line = line;
+				tmp.GetComponent<Card> ().lineIdx = lineIdx + i;
+				tmp.transform.position = objPos;
+				tmp.GetComponent<SpriteRenderer> ().sortingOrder = GameController.updateCardOrder ();
+				GameController.playCards [myLine].Remove (tmp);
+				GameController.playCards [line].Add (tmp);
+				if (myLine >= 7) {
+					Debug.Log ("I was waiting or going to shape : moving cnt " + cnt);
+					break;
+				}
 			}
-			tmp.GetComponent<Card> ().line = line;
-			tmp.GetComponent<Card> ().lineIdx = lineIdx + i;
-			tmp.transform.position = objPos;
-			tmp.GetComponent<SpriteRenderer> ().sortingOrder = GameController.updateCardOrder();
-			GameController.playCards [myLine].Remove (tmp);
-			GameController.playCards [line].Add (tmp);
-			cnt++;
-			if (myLine >= 7) {
-				Debug.Log ("I was waiting or going to shape : moving cnt " + cnt);
-				break;
-			}
-		}
 
-		Debug.Log ("----move complete (" + tmpCnt + "-" + myLineIdx + " objects)-----");
+			Debug.Log ("----move complete (" + tmpCnt + "-" + myLineIdx + " objects)-----");
 
-		if(myLine != 7)
 			GameController.revealCard (myLine);
+		}
 	}
 
 	bool validCheck(int line){

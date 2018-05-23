@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour {
 			setFlag [i] = false;
 		for (int i = 0; i < 12; i++)
 			playCards [i] = new List<GameObject> ();
-		cardOrdering = 0;
+		cardOrdering = 1;
 		hiddenCardNum = 0;
 		preCardSet ();
 	}
@@ -60,6 +60,7 @@ public class GameController : MonoBehaviour {
 			shapeDeck [i] = new Vector2 (-7.5f + (i % 2) * 1.7f, -1 - (i / 2) * 2.3f);
 			GameObject tmp = Instantiate (Card, shapeDeck [i], Quaternion.identity) as GameObject;
 			tmp.GetComponent<SpriteRenderer> ().sprite = shape[i];
+			tmp.name = "shape" + i;
 		}
 
 		Debug.Log("Card set completed");
@@ -83,6 +84,23 @@ public class GameController : MonoBehaviour {
 			tmp.GetComponent<SpriteRenderer> ().sprite = cardSprites [newRandomNum];
 			tmp.GetComponent<BoxCollider2D> ().enabled = true;
 		}
+
+		switch (newRandomNum / 13) {
+		case 0:
+			tmp.name = "clova ";
+			break;
+		case 1:
+			tmp.name = "dia ";
+			break;
+		case 2:
+			tmp.name = "heart ";
+			break;
+		case 3:
+			tmp.name = "spade ";
+			break;
+		}
+		tmp.name += (newRandomNum % 13);
+
 		playCards[i].Add(tmp);
 	}
 

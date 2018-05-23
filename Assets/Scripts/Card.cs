@@ -11,7 +11,6 @@ public class Card : MonoBehaviour {
 	public int line, lineIdx;
 
 	private Vector3 offset;
-//	private bool dragFlag;
 
 	public void initialize(bool flag, int i, int j, GameObject me){
 		isHidden = flag;
