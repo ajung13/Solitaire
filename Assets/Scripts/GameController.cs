@@ -35,11 +35,16 @@ public class GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetMouseButtonDown (0)){
-			if (Input.mousePosition.x >= 25 && Input.mousePosition.x <= 65 && Input.mousePosition.y >= 238 && Input.mousePosition.y <= 295) {
-				Debug.Log ("new card come on");
+			if (Input.mousePosition.x >= 25 && Input.mousePosition.x <= 65 && Input.mousePosition.y >= 238 && Input.mousePosition.y <= 295)
 				newCard ();
-			}
 		}
+		if (playCards[7].Count != 0 && gameClearCheck ()) {
+			Debug.Log ("Game Clear");
+		}
+	}
+
+	bool gameClearCheck(){
+		return false;
 	}
 
 	void preCardSet(){
@@ -113,7 +118,6 @@ public class GameController : MonoBehaviour {
 		if (tmp == null)
 			return;
 		if (!tmp.GetComponent<Card> ().isHidden) {
-			Debug.Log ("is not hidden");
 			return;
 		}
 		tmp.GetComponent<Card> ().isHidden = false;

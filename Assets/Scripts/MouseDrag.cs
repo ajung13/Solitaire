@@ -12,6 +12,7 @@ public class MouseDrag : MonoBehaviour {
 
 	void OnMouseDown(){
 		initPosition = transform.position;
+		GetComponent<SpriteRenderer> ().sortingOrder = GameController.updateCardOrder ();
 	}
 
 	void OnMouseDrag(){
@@ -28,11 +29,11 @@ public class MouseDrag : MonoBehaviour {
 		if (finalPosition.x >= x_start) {
 			//destination is line 0 to 6
 			int line = (int)((finalPosition.x - x_start) / x_offset);
-			Debug.Log (finalPosition.x + " = " + x_start + " + " + x_offset + " * " + line);
+//			Debug.Log (finalPosition.x + " = " + x_start + " + " + x_offset + " * " + line);
 
 			if (validCheck (line)) {
 				int lineIdx = findLineIdx (line);
-				Debug.Log ("move from line " + GetComponent<Card> ().line + " to line (" + line + ", " + lineIdx + ")");
+//				Debug.Log ("move from line " + GetComponent<Card> ().line + " to line (" + line + ", " + lineIdx + ")");
 				moveCards (line, lineIdx);
 			} else {
 				transform.position = initPosition;
@@ -45,24 +46,6 @@ public class MouseDrag : MonoBehaviour {
 			if (finalPosition.y <= -3.3f)
 				line += 2;
 
-			switch (line) {
-			case 8:
-				Debug.Log ("clova");
-				break;
-			case 9:
-				Debug.Log ("dia");
-				break;
-			case 10:
-				Debug.Log ("heart");
-				break;
-			case 11:
-				Debug.Log ("spade");
-				break;
-			default:
-				Debug.Log ("error");
-				break;
-			}
-
 			if (GetComponent<Card> ().line < 7) {
 				if (GetComponent<Card> ().lineIdx != GameController.playCards [GetComponent<Card> ().line].Count - 1) {
 					//not the last card
@@ -72,7 +55,7 @@ public class MouseDrag : MonoBehaviour {
 			}
 			if (validCheck (line)) {
 				int lineIdx = findLineIdx (line);
-				Debug.Log ("move from line " + GetComponent<Card> ().line + " to shape line (" + line + ", " + lineIdx + ")");
+//				Debug.Log ("move from line " + GetComponent<Card> ().line + " to shape line (" + line + ", " + lineIdx + ")");
 				moveCards (line, lineIdx);
 			} else {
 				transform.position = initPosition;
@@ -92,12 +75,11 @@ public class MouseDrag : MonoBehaviour {
 		int myLineIdx = GetComponent<Card> ().lineIdx;
 
 		if (line == 7) {
-			Debug.Log ("cannot move to waiting line");
+//			Debug.Log ("cannot move to waiting line");
 			return;
 		}
 
 		if (myLine == 7) {
-			Debug.Log ("hard coding let's go");
 			if (line < 7)
 				transform.position = new Vector2 (x_start + line * x_offset, y_start + lineIdx * y_offset);
 			else
@@ -111,7 +93,6 @@ public class MouseDrag : MonoBehaviour {
 			//move all cards behind me
 			List<GameObject> temp = GameController.playCards [myLine];
 			int tmpCnt = temp.Count;
-			int cnt = 0;
 			for (int i = 0; i < tmpCnt - myLineIdx; i++) {
 				Vector2 objPos;
 				if (line < 7)
@@ -129,13 +110,11 @@ public class MouseDrag : MonoBehaviour {
 				tmp.GetComponent<SpriteRenderer> ().sortingOrder = GameController.updateCardOrder ();
 				GameController.playCards [myLine].Remove (tmp);
 				GameController.playCards [line].Add (tmp);
-				if (myLine >= 7) {
-					Debug.Log ("I was waiting or going to shape : moving cnt " + cnt);
+				if (myLine >= 7)
 					break;
-				}
 			}
 
-			Debug.Log ("----move complete (" + tmpCnt + "-" + myLineIdx + " objects)-----");
+//			Debug.Log ("----move complete (" + tmpCnt + "-" + myLineIdx + " objects)-----");
 
 			GameController.revealCard (myLine);
 		}
@@ -148,7 +127,6 @@ public class MouseDrag : MonoBehaviour {
 		bool returnflag = false;
 		if (GameController.lastCardinLine (line) == null) {
 			//there's no card in this line
-			Debug.Log("no card in line " + line);
 			if (GetComponent<Card> ().number == 12)
 				return true;
 			else if (GetComponent<Card> ().number == 0 && line - 8 == GetComponent<Card> ().shape)
@@ -182,16 +160,16 @@ public class MouseDrag : MonoBehaviour {
 		}
 		if (!returnflag)
 			return returnflag;
-		Debug.Log ("color check ok");
+//		Debug.Log ("color check ok");
 
 		//number check
 		returnflag = false;
 		int prevnum = prevCard.number;
 		if (GetComponent<Card> ().number + 1 - 2 * (line / 8) == prevnum) {
 			returnflag = true;
-			Debug.Log ("number check ok");
-		} else
-			Debug.Log ("number check failed");
+//			Debug.Log ("number check ok");
+		} 
+//		else	Debug.Log ("number check failed");
 
 		return returnflag;
 	}
