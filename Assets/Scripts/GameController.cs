@@ -5,7 +5,7 @@ using UnityEngine;
 //public enum shape {Heart, Diamond, Clova, Spade};
 
 public class GameController : MonoBehaviour {
-	public static List<GameObject>[] playCards = new List<GameObject>[8];
+	public static List<GameObject>[] playCards = new List<GameObject>[12];
 	private static int cardOrdering;
 	public static int hiddenCardNum;
 
@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		for (int i = 0; i < 4 * 13; i++)
 			setFlag [i] = false;
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < 12; i++)
 			playCards [i] = new List<GameObject> ();
 		cardOrdering = 0;
 		hiddenCardNum = 0;
